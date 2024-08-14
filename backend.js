@@ -6,15 +6,15 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         console.log(`Tab ${sender.tab.id} is ready.`);
     }
 
-    if (message.html && sender.tab) {
-        processMessage(message.html, sender.tab.id);
+    if (message.html && message.url &&sender.tab) {
+        processMessage(message.html,message.url, sender.tab.id);
     }
 });
 
-function processMessage(html, tabId) {
-    const jsonData = JSON.stringify({ html: html });
+function processMessage(html, url, tabId) {
+    const jsonData = JSON.stringify({ html: html, url: url });
     console.log("Sending this data to the server:", jsonData);
-    fetch('http://ec2-3-107-89-120.ap-southeast-2.compute.amazonaws.com/test', {
+    fetch('http://ec2-13-55-69-254.ap-southeast-2.compute.amazonaws.com/test', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: jsonData

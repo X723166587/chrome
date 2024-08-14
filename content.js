@@ -1,8 +1,10 @@
 console.log("Content script loaded.");
 
 document.addEventListener('DOMContentLoaded', () => {
+    const pageUrl = window.location.href;
     console.log("DOM fully loaded and parsed.");
-    chrome.runtime.sendMessage({ html: document.documentElement.outerHTML });
+    chrome.runtime.sendMessage({ html: document.documentElement.outerHTML,
+    url: pageUrl});
 });
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
