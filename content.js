@@ -2,10 +2,16 @@ console.log("Content script loaded.");
 
 document.addEventListener('DOMContentLoaded', () => {
     const pageUrl = window.location.href;
+    console.log("Current URL:", pageUrl);
     console.log("DOM fully loaded and parsed.");
-    chrome.runtime.sendMessage({ html: document.documentElement.outerHTML,
-    url: pageUrl});
+
+    // 发送 HTML 和 URL 给后台脚本
+    chrome.runtime.sendMessage({
+        html: document.documentElement.outerHTML,
+        url: pageUrl
+    });
 });
+
 
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     console.log('Content script received message:', message, 'from sender:', sender);
